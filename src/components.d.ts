@@ -4,12 +4,23 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Create: typeof import('./components/customer/Create.vue')['default']
+    Edit: typeof import('./components/customer/Edit.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCol: typeof import('element-plus/es')['ElCol']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElRow: typeof import('element-plus/es')['ElRow']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     EpArrowDownBold: typeof import('~icons/ep/arrow-down-bold')['default']
     EpArrowUpBold: typeof import('~icons/ep/arrow-up-bold')['default']
     EpCircleCheckFilled: typeof import('~icons/ep/circle-check-filled')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    List: typeof import('./components/customer/List.vue')['default']
+    Show: typeof import('./components/customer/Show.vue')['default']
   }
 }
 

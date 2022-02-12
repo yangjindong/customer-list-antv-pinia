@@ -11,7 +11,7 @@ export interface CustomerProps {
   phone: string
   address: string
   description: string
-  created_at: Date
+  created_at?: Date
 }
 
 export interface ListProps<P> {

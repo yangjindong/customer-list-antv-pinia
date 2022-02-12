@@ -48,6 +48,13 @@
       <el-icon><ep-circle-check-filled /></el-icon>
       Hello world
     </el-button>
+    <el-button
+      class="ma-2"
+      elevation="0"
+      @click="$router.push('/customer/create')"
+    >
+      Create Customer
+    </el-button>
     <a href="https://github.com/yangjindong" target="_blank" class="creator">
       Jindong Yang
     </a>
