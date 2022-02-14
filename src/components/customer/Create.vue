@@ -33,14 +33,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { key } from '@/store'
-  import { useStore } from 'vuex'
+  import { useStore } from '@/store'
   import { AllStateTypes } from '@/store/types'
   import { CustomerProps } from '@/store/modules/Customer/types'
   import { useRouter } from 'vue-router'
 
   const router = useRouter()
-  const store = useStore<AllStateTypes>(key)
+  const store = useStore()
   const customer = reactive({
     first_name: '',
     last_name: '',
