@@ -1,46 +1,51 @@
 <template>
-  <el-row>
-    <el-col :span="12" :offset="6">
+  <a-row>
+    <a-col :md="{ span: 12, offset: 6 }" :xs="24">
       <h2>Create customer</h2>
-      <el-form label-position="top" :model="customer">
-        <el-form-item label="First Name">
-          <el-input v-model="customer.first_name"></el-input>
-        </el-form-item>
-        <el-form-item label="Last Name">
-          <el-input v-model="customer.last_name"></el-input>
-        </el-form-item>
-        <el-form-item label="Email">
-          <el-input v-model="customer.email"></el-input>
-        </el-form-item>
-        <el-form-item label="Phone">
-          <el-input v-model="customer.phone"></el-input>
-        </el-form-item>
-        <el-form-item label="Address">
-          <el-input v-model="customer.address"></el-input>
-        </el-form-item>
-        <el-form-item label="Description">
-          <el-input v-model="customer.description"></el-input>
-        </el-form-item>
-        <el-button type="primary" @click="createCustomer">
+      <a-form layout="vertical" :model="customer">
+        <a-form-item label="First Name">
+          <a-input v-model:value="customer.first_name"></a-input>
+        </a-form-item>
+        <a-form-item label="Last Name">
+          <a-input v-model:value="customer.last_name"></a-input>
+        </a-form-item>
+        <a-form-item label="Email">
+          <a-input v-model:value="customer.email"></a-input>
+        </a-form-item>
+        <a-form-item label="Phone">
+          <a-input v-model:value="customer.phone"></a-input>
+        </a-form-item>
+        <a-form-item label="Address">
+          <a-input v-model:value="customer.address"></a-input>
+        </a-form-item>
+        <a-form-item label="Description">
+          <a-input v-model:value="customer.description"></a-input>
+        </a-form-item>
+        <a-button type="primary" @click="createCustomer">
           Create Customer
-        </el-button>
-        <el-button type="primary" plain @click="$router.push('/customer')">
+        </a-button>
+        <a-button
+          style="margin-left: 10px"
+          type="primary"
+          plain
+          @click="$router.push('/customer')"
+        >
           View All Customers
-        </el-button>
-      </el-form>
-    </el-col>
-  </el-row>
+        </a-button>
+      </a-form>
+    </a-col>
+  </a-row>
 </template>
 
 <script lang="ts" setup>
   import { useStore } from '@/store'
-  import { AllStateTypes } from '@/store/types'
   import { CustomerProps } from '@/store/modules/Customer/types'
+  import { message } from 'ant-design-vue/es'
   import { useRouter } from 'vue-router'
 
   const router = useRouter()
   const store = useStore()
-  const customer = reactive({
+  const customer = reactive<CustomerProps>({
     first_name: '',
     last_name: '',
     email: '',
@@ -52,7 +57,7 @@
     store
       .dispatch('customer/createCustomer', customer)
       .then(() => {
-        ElMessage.success('Customer is created successfully')
+        message.success('Customer is created successfully')
         setTimeout(() => {
           router.push('/customer')
         }, 2000)

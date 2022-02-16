@@ -1,6 +1,9 @@
+import { ColumnType, ColumnGroupType } from 'ant-design-vue/es/table'
+
 export default interface CustomerStateTypes {
   customer: CustomerProps
   customers: { data: ListProps<CustomerProps> }
+  columns: (ColumnGroupType<any> | ColumnType<any>)[]
 }
 
 export interface CustomerProps {

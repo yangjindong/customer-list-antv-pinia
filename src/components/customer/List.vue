@@ -1,7 +1,7 @@
 <template>
-  <el-row>
-    <el-col :md="{ span: 16, offset: 4 }" :xs="24">
-      <h3>Customers</h3>
+  <a-row>
+    <a-col :md="{ span: 16, offset: 4 }" :xs="24">
+      <a-typography-title :level="3">Customers</a-typography-title>
       <ul>
         <li v-for="customer in customers" :key="customer._id">
           <router-link :to="`/customer/${customer._id}`">
@@ -11,53 +11,37 @@
           {{ customer.phone }}
         </li>
       </ul>
-      <el-table :data="customers" stripe style="width: 100%">
-        <el-table-column label="Name">
-          <template #default="scope">
-            <div>
-              <router-link :to="`/customer/${scope.row._id}`">
-                {{ scope.row.first_name }} {{ scope.row.last_name }}
-              </router-link>
-            </div>
+      <a-table
+        bordered
+        :data-source="customers"
+        :columns="columns"
+        :scroll="{ x: 1000 }"
+      >
+        <template #bodyCell="{ column, index, record }">
+          <template v-if="column.key === 'name'">
+            <div>{{ record.last_name }}{{ record.first_name }}</div>
           </template>
-        </el-table-column>
-        <el-table-column prop="email" label="Email"></el-table-column>
-        <el-table-column prop="phone" label="Phone"></el-table-column>
-        <el-table-column prop="address" label="Address"></el-table-column>
-        <el-table-column
-          prop="description"
-          label="Description"
-        ></el-table-column>
-        <el-table-column prop="created_at" label="Created At"></el-table-column>
-        <el-table-column
-          fixed="right"
-          label="Operation"
-          className="text-nowrap"
-          width="140"
-        >
-          <template #default="scope">
-            <el-button
-              size="small"
-              @click="handleEdit(scope.$index, scope.row)"
-            >
+          <template v-if="column.key === 'operation'">
+            <a-button size="small" @click="handleEdit(index, record)">
               Edit
-            </el-button>
-            <el-button
-              type="danger"
+            </a-button>
+            <a-button
+              type="primary"
+              danger
               size="small"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleDelete(index, record)"
             >
               Delete
-            </el-button>
+            </a-button>
           </template>
-        </el-table-column>
-      </el-table>
+        </template>
+      </a-table>
       <br />
-      <el-button type="primary" @click="$router.push('/customer/create')">
+      <a-button type="primary" @click="$router.push('/customer/create')">
         Create Customer
-      </el-button>
-    </el-col>
-  </el-row>
+      </a-button>
+    </a-col>
+  </a-row>
 </template>
 
 <script lang="ts" setup>
@@ -67,6 +51,7 @@
 
   const store = useStore()
   const router = useRouter()
+  const columns = store.state.customer.columns
   const customers = reactive([]) as CustomerProps[]
   onMounted(async () => {
     await store
@@ -81,11 +66,11 @@
         console.log(e)
       })
   })
-  const handleEdit = (index: number, row: CustomerProps) => {
-    router.push(`/customer/${row._id}/edit`)
+  const handleEdit = (index: number, record: CustomerProps) => {
+    router.push(`/customer/${record._id}/edit`)
   }
-  const handleDelete = (index: number, row: CustomerProps) => {
-    store.dispatch('customer/deleteCustomer', row._id).then(() => {
+  const handleDelete = (index: number, record: CustomerProps) => {
+    store.dispatch('customer/deleteCustomer', record._id).then(() => {
       window.location.reload()
     })
   }

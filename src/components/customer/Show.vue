@@ -1,11 +1,11 @@
 <template>
-  <el-row>
-    <el-col :span="12" :offset="6">
-      <el-button type="primary" @click="$router.push('/customer')">
+  <a-row>
+    <a-col :md="{ span: 12, offset: 6 }" :xs="24">
+      <a-button type="primary" @click="$router.push('/customer')">
         View All Customers
-      </el-button>
-    </el-col>
-  </el-row>
+      </a-button>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup lang="ts">

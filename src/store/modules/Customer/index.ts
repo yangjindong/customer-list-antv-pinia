@@ -15,7 +15,52 @@ export const customerModule: Module<CustomerStateTypes, RootStateTypes> = {
       description: '',
       created_at: new Date()
     },
-    customers: { data: {} }
+    customers: { data: {} },
+    columns: [
+      {
+        title: 'Name',
+        key: 'name',
+        width: 150
+      },
+      {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+        responsive: ['md'],
+        width: 150
+      },
+      {
+        title: 'Phone',
+        dataIndex: 'phone',
+        key: 'phone',
+        width: 150
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+        width: 150
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        responsive: ['md'],
+        width: 150
+      },
+      {
+        title: 'Created at',
+        dataIndex: 'created_at',
+        key: 'created_at'
+      },
+      {
+        title: 'Operation',
+        key: 'operation',
+        width: 150,
+        fixed: 'right',
+        align: 'center'
+      }
+    ]
   },
   getters: {
     getCustomer(state: CustomerStateTypes) {
