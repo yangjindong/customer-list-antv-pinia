@@ -1,5 +1,5 @@
-import AuthStateTypes from './modules/Auth/types'
-import CustomerStateTypes from './modules/Customer/types'
+import AuthStateTypes from './modules/auth/types'
+import CustomerStateTypes from './modules/customer/types'
 
 export default interface RootStateTypes {
   text: string

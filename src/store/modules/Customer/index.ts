@@ -1,11 +1,11 @@
-import { Module } from 'vuex'
+import { defineStore } from 'pinia'
 import axios from '@/plugins/http'
 import CustomerStateTypes, { CustomerProps } from './types'
 import RootStateTypes from '@/store/types'
 
-export const customerModule: Module<CustomerStateTypes, RootStateTypes> = {
-  namespaced: true,
-  state: {
+export const useCustomerStore = defineStore({
+  id: 'customer',
+  state: (): CustomerStateTypes => ({
     customer: {
       first_name: '进东',
       last_name: '',
@@ -61,77 +61,76 @@ export const customerModule: Module<CustomerStateTypes, RootStateTypes> = {
         align: 'center'
       }
     ]
-  },
+  }),
   getters: {
-    getCustomer(state: CustomerStateTypes) {
-      return state.customer.last_name
-    },
     getCustomers(state: CustomerStateTypes) {
       return state.customers.data
     }
   },
-  mutations: {
-    listCustomers(state, data) {
-      state.customers.data = data
-    },
-    getCustomer(state, data) {
-      state.customer = data
-    },
-    createCustomer(state, data) {
-      if (data._id) {
-        state.customers.data[data._id] = data
-      }
-    },
-    updateCustomer(state, data) {
-      if (data._id) {
-        state.customers.data[data._id] = data
-      }
-    },
-    deleteCustomer(state, data) {
-      delete state.customers.data[data._id]
-    }
-  },
+  // mutations: {
+  //   listCustomers(state, data) {
+  //     state.customers.data = data
+  //   },
+  //   getCustomer(state, data) {
+  //     state.customer = data
+  //   },
+  //   createCustomer(state, data) {
+  //     if (data._id) {
+  //       state.customers.data[data._id] = data
+  //     }
+  //   },
+  //   updateCustomer(state, data) {
+  //     if (data._id) {
+  //       state.customers.data[data._id] = data
+  //     }
+  //   },
+  //   deleteCustomer(state, data) {
+  //     delete state.customers.data[data._id]
+  //   }
+  // },
   actions: {
-    async listCustomers(context) {
+    async listCustomers() {
       const { data } = await axios({
         url: '/customers',
         method: 'get'
       })
-      context.commit('listCustomers', data)
+      this.customers.data = data
       return data
     },
-    async getCustomer(context, id): Promise<CustomerProps> {
+    async getCustomer(id: string): Promise<CustomerProps> {
       const { data } = await axios({
         url: `/customers/${id}`,
         method: 'get'
       })
-      context.commit('getCustomer', data)
+      this.customer = data
       return data
     },
-    async createCustomer(context, payload) {
+    async createCustomer(payload: CustomerProps) {
       const { data } = await axios({
         url: '/customers',
         method: 'post',
         data: payload
       })
-      context.commit('createCustomer', data)
+      if (data._id) {
+        this.customers.data[data._id] = data
+      }
     },
-    async updateCustomer(context, { id, payload }) {
+    async updateCustomer(id: string, payload: CustomerProps) {
       const { data } = await axios({
         url: `/customers/${id}`,
         method: 'put',
         data: payload
       })
-      context.commit('updateCustomer', data)
+      if (data._id) {
+        this.customers.data[data._id] = data
+      }
     },
-    async deleteCustomer(context, id) {
+    async deleteCustomer(id: string) {
       const { data } = await axios({
         url: `/customers/${id}`,
         method: 'delete'
       })
-      context.commit('deleteCustomer', data)
+      delete this.customers.data[data._id]
     }
   }
-}
-
-export default customerModule
+})

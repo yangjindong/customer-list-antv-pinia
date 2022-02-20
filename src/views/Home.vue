@@ -1,60 +1,54 @@
 <template>
   <div class="container">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Vue 3 + TypeScript + Vite + Elemenet Plus" />
+    <HelloWorld msg="Vue 3 + TypeScript + Vite + Ant Design Vue + Pinia" />
     <div class="buttons-container">
-      <el-button
-        class="ma-2"
-        type="primary"
-        elevation="0"
-        dark
-        @click="count++"
-      >
+      <a-button class="ma-2" type="primary" elevation="0" dark @click="count++">
         <span>Count: {{ count }}</span>
-      </el-button>
-      <el-button
+      </a-button>
+      <a-button
         class="ma-2"
         type="primary"
         elevation="0"
         dark
-        @click="store.dispatch('changeAuth', !auth)"
+        @click="authStore.changeAuth(!auth)"
       >
         <span>{{ auth ? 'Log out' : 'Login' }}</span>
-      </el-button>
-      <el-button
+      </a-button>
+      <a-button
         class="ma-2"
         type="primary"
         elevation="0"
         dark
-        @click="store.dispatch('auth/handleAuth', !auth)"
+        @click="authStore.handleAuth(!auth)"
       >
         <span>{{ auth ? 'Log out' : 'Login' }}</span>
-      </el-button>
-      <el-button
+      </a-button>
+      <a-button
         class="ma-2"
         type="primary"
         elevation="0"
         @click="$router.push('/pagetwo')"
       >
         Go to protected page
-      </el-button>
+      </a-button>
     </div>
     <div class="state-container">
       {{ auth ? 'Logged in' : 'Logged out' }}
-      <el-icon v-if="auth"><ep-arrow-down-bold /></el-icon>
-      <el-icon v-else><ep-arrow-up-bold /></el-icon>
+      <arrow-down-outlined v-if="auth" />
+      <arrow-up-outlined v-else />
     </div>
-    <el-button @click="handleClick">
-      <el-icon><ep-circle-check-filled /></el-icon>
+    <a-button @click="handleClick">
+      <check-circle-filled />
       Hello world
-    </el-button>
-    <el-button
+    </a-button>
+    <a-button
       class="ma-2"
       elevation="0"
       @click="$router.push('/customer/create')"
     >
       Create Customer
-    </el-button>
+    </a-button>
     <a href="https://github.com/yangjindong" target="_blank" class="creator">
       Jindong Yang
     </a>
@@ -64,16 +58,21 @@
   import { computed, ref } from '@vue/runtime-core'
   import HelloWorld from '../components/HelloWorld.vue'
   import { key } from '../store'
-  import { useStore } from 'vuex'
+  import { useAuthStore } from '@/store/modules/auth'
   import { AllStateTypes } from '@/store/types'
+  import {
+    ArrowDownOutlined,
+    ArrowUpOutlined,
+    CheckCircleFilled
+  } from '@ant-design/icons-vue'
 
   const count = ref(0)
 
-  const store = useStore<AllStateTypes>(key)
+  const authStore = useAuthStore()
   const auth = computed(() => {
-    return store.getters['auth/getAuth']
+    return authStore.getAuth
   })
-  console.log(store.state.auth.name)
+  console.log(authStore.name)
 
   const handleClick = () => {
     ElMessage.success('Hello world')

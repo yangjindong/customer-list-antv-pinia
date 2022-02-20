@@ -37,25 +37,28 @@
         </template>
       </a-table>
       <br />
-      <a-button type="primary" @click="$router.push('/customer/create')">
-        Create Customer
-      </a-button>
+      <div>
+        <a-button type="primary" @click="$router.push('/customer/create')">
+          Create Customer
+        </a-button>
+        <a-button type="primary" @click="$router.push('/')">Home</a-button>
+      </div>
     </a-col>
   </a-row>
 </template>
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router'
-  import { useStore } from '@/store'
-  import { CustomerProps } from '@/store/modules/Customer/types'
+  import { useCustomerStore } from '@/store/modules/customer'
+  import { CustomerProps } from '@/store/modules/customer/types'
 
-  const store = useStore()
+  const customerStore = useCustomerStore()
   const router = useRouter()
-  const columns = store.state.customer.columns
+  const columns = customerStore.columns
   const customers = reactive([]) as CustomerProps[]
   onMounted(async () => {
-    await store
-      .dispatch('customer/listCustomers')
+    await customerStore
+      .listCustomers()
       .then((res: CustomerProps[]) => {
         res.forEach((customer) => {
           customers.push(customer)
@@ -70,15 +73,15 @@
     router.push(`/customer/${record._id}/edit`)
   }
   const handleDelete = (index: number, record: CustomerProps) => {
-    store.dispatch('customer/deleteCustomer', record._id).then(() => {
+    customerStore.deleteCustomer(record._id).then(() => {
       window.location.reload()
     })
   }
   const customers2 = computed(
-    () => store.getters['customer/getCustomers'] as CustomerProps[]
+    () => customerStore.getCustomers as CustomerProps[]
   )
   const customers3 = computed(() => {
-    const result = store.dispatch('customer/listCustomers')
+    const result = customerStore.listCustomers()
     return result
   })
   // console.log(customers2.value)

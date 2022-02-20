@@ -2,10 +2,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import protectedRoute from '../middlewares/protected'
 import Home from '../views/Home.vue'
 import PageTwo from '../views/pageTwo.vue'
-import ListCustomer from '@/components/customer/List.vue'
-import CreateCustomer from '@/components/customer/Create.vue'
-import EditCustomer from '@/components/customer/Edit.vue'
-import ShowCustomer from '@/components/customer/Show.vue'
+import ListCustomer from '@/views/customer/List.vue'
+import CreateCustomer from '@/views/customer/Create.vue'
+import EditCustomer from '@/views/customer/Edit.vue'
+import ShowCustomer from '@/views/customer/Show.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {

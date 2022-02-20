@@ -38,19 +38,19 @@
 </template>
 
 <script lang="ts" setup>
-  import { useStore } from '@/store'
-  import { CustomerProps } from '@/store/modules/Customer/types'
+  import { useCustomerStore } from '@/store/modules/customer'
+  import { CustomerProps } from '@/store/modules/customer/types'
   import { message } from 'ant-design-vue/es'
   import { useRouter, useRoute } from 'vue-router'
 
   const router = useRouter()
   const route = useRoute()
-  const store = useStore()
-  const customer = reactive<CustomerProps>(store.state.customer.customer)
+  const customerStore = useCustomerStore()
+  const customer = reactive<CustomerProps>(customerStore.customer)
   // const customer = toRefs(store.state.customer.customer)
   // console.log(customer.first_name.value)
   onMounted(async () => {
-    const result = await store.dispatch('customer/getCustomer', route.params.id)
+    const result = await customerStore.getCustomer(route.params.id)
     customer.first_name = result.first_name
     customer.last_name = result.last_name
     customer.email = result.email
@@ -60,11 +60,8 @@
   })
   // console.log(customer)
   const updateCustomer = () => {
-    store
-      .dispatch('customer/updateCustomer', {
-        id: route.params.id,
-        payload: customer
-      })
+    customerStore
+      .updateCustomer(route.params.id, customer)
       .then(() => {
         message.success('Customer is updated successfully')
         setTimeout(() => {

@@ -38,13 +38,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { useStore } from '@/store'
+  import { useCustomerStore } from '@/store/modules/customer'
   import { CustomerProps } from '@/store/modules/Customer/types'
   import { message } from 'ant-design-vue/es'
   import { useRouter } from 'vue-router'
 
   const router = useRouter()
-  const store = useStore()
+  const customerStore = useCustomerStore()
   const customer = reactive<CustomerProps>({
     first_name: '',
     last_name: '',
@@ -54,8 +54,8 @@
     description: ''
   })
   const createCustomer = () => {
-    store
-      .dispatch('customer/createCustomer', customer)
+    customerStore
+      .createCustomer(customer)
       .then(() => {
         message.success('Customer is created successfully')
         setTimeout(() => {

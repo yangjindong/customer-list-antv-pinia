@@ -12,14 +12,10 @@ declare module 'vue' {
     ARow: typeof import('ant-design-vue/es')['Row']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATypographyTitle: typeof import('ant-design-vue/es')['TypographyTitle']
-    Create: typeof import('./components/customer/Create.vue')['default']
-    Edit: typeof import('./components/customer/Edit.vue')['default']
     EpArrowDownBold: typeof import('~icons/ep/arrow-down-bold')['default']
     EpArrowUpBold: typeof import('~icons/ep/arrow-up-bold')['default']
     EpCircleCheckFilled: typeof import('~icons/ep/circle-check-filled')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-    List: typeof import('./components/customer/List.vue')['default']
-    Show: typeof import('./components/customer/Show.vue')['default']
   }
 }
 
